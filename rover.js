@@ -1,5 +1,8 @@
 'use strict';
 
+const Direction = require('./direction');
+const direction = new Direction();
+
 class Rover {
   constructor (xPosition, yPosition, orientation) {
     this.xPosition = xPosition,
@@ -7,25 +10,26 @@ class Rover {
     this.orientation = orientation
   }
 
-  _getLeftOrientation() {
-    const nextLeftMove = {
-      'N': 'W',
-      'W': 'S',
-      'S': 'E',
-      'E': 'N',
-    }
-    return nextLeftMove[this.orientation];
-  }
 
-  _getRightOrientation() {
-    const nextLeftMove = {
-      'N': 'E',
-      'W': 'N',
-      'S': 'W',
-      'E': 'S',
-    }
-    return nextLeftMove[this.orientation];
-  }
+  // _getLeftOrientation() {
+  //   const nextLeftMove = {
+  //     'N': 'W',
+  //     'W': 'S',
+  //     'S': 'E',
+  //     'E': 'N',
+  //   }
+  //   return nextLeftMove[this.orientation];
+  // }
+
+  // _getRightOrientation() {
+  //   const nextLeftMove = {
+  //     'N': 'E',
+  //     'W': 'N',
+  //     'S': 'W',
+  //     'E': 'S',
+  //   }
+  //   return nextLeftMove[this.orientation];
+  // }
 
   _isValidMove(grid) {
     if (((this.yPosition - 1) < 0) || ((this.xPosition - 1) < 0)
@@ -53,13 +57,22 @@ class Rover {
     }
   }
 
+  _moveLeft() {
+    return direction.getLeftDirection(this.orientation);
+
+  }
+
+  _moveRight() {
+    return direction.getRightDirection(this.orientation);
+  }
+
   executeInstruction(grid, instruction) {
     switch(instruction) {
       case 'L':
-      this.orientation = this._getLeftOrientation(instruction);
+      this.orientation = this._moveLeft();
       break;
       case 'R':
-        this.orientation = this._getRightOrientation(instruction);
+        this.orientation = this._moveRight();
       break;
       case 'M':
         this._setNextPosition(grid);

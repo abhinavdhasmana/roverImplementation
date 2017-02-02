@@ -2,8 +2,20 @@
 
 class Grid {
   constructor(length, width) {
-    this.length = length;
-    this.width = width;
+    if(this._isValidInput(length, width)) {
+      this.length = length;
+      this.width = width;
+    } else {
+      return {invalid:true};
+    }
+  }
+
+  _isValidInput(length, width) {
+    if ((Number.isInteger(length)) && (Number.isInteger(width))) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getDimensions() {
